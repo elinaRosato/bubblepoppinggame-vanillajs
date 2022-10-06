@@ -1,0 +1,57 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+    font-family: 'Fredoka One', cursive;
+    font-size: 50px;
+}
+
+.gameTitle {
+    font-size: 130px;
+    text-align: center;
+    color: white;
+    margin-top: 3vh;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: #07406b;
+}
+
+.gameContainer {
+    width: 1820px;
+    margin: auto;
+    margin-top: 2vh;
+    padding-top: 55px;
+}
+
+.canvasContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 0;
+}
+
+.gameCanvas {
+    width: 1750px;
+    height: 900px;
+    border: 4px solid #0078D3;
+    background: linear-gradient(180deg, rgba(0,134,190,1) 32%, rgba(6,72,184,1) 61%, rgba(18,4,85,1) 98%);
+}
+
+.score {
+    display: flex;
+    margin-left: 5vw;
+}
+
+.scoreValue{
+    padding-left: 1vw;
+}
+
+.gameOverFrame {
+    position: absolute;
+    top: 50%;
+    left: 42%;
+}
