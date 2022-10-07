@@ -52,7 +52,11 @@ canvas.addEventListener('mouseup', function(){
 
 //Player character -----------------------------------------------------------------------------------------------
 
-//Bubble animation spritesheet
+//Player spritesheets
+const playerLeft = new Image();
+playerLeft.src = 'images/fish_swim_left.png';
+const playerRight = new Image();
+playerRight.src = 'images/fish_swim_right.png';
 
 class Player {
     constructor(){
@@ -61,9 +65,14 @@ class Player {
         this.radius = 50;
         this.angle = 0;
         this.speed = 40;
+        this.frameX = 0;
+        this.frameY = 0;
+        this.frame = 0;
+        this.spriteWidth = 498;
+        this.spriteHeight = 327;
     }
     update() {
-        //distance on the horizontal x-axis and on the vertical y-axis
+        //Distance on the horizontal x-axis and on the vertical y-axis
         const dx = this.x - mouse.x; 
         const dy = this.y - mouse.y;
 
@@ -73,6 +82,50 @@ class Player {
         } 
         if (this.y != mouse.y) {
             this.y -= dy/this.speed;
+        }
+
+        //calculate angle of movement
+        let theta = Math.atan2(dy, dx)
+        this.angle = theta;
+
+        //Change sprite every 5 frames
+        if (gameFrame % 5 == 0) {
+            this.frame++;
+            if (this.frame > 11) {
+                this.frame = 0;
+            }
+            //Setting frameY
+            if (this.frame >= 8) {
+                this.frameY = 2;
+            } else if (this.frame >= 4) {
+                this.frameY = 1;
+            } else {
+                this.frameY = 0;
+            }
+            //Setting frameX
+            if (this.x >= mouse.x) {
+                if (this.frame == 0 || this.frame == 4 || this.frame == 8) {
+                    this.frameX = 0;
+                } else if (this.frame == 1 || this.frame == 5 || this.frame == 9) {
+                    this.frameX = 1;
+                } else if (this.frame == 2 || this.frame == 6 || this.frame == 10) {
+                    this.frameX = 2;
+                } else if(this.frame == 3 || this.frame == 7 || this.frame == 11){
+                    this.frameX = 3;
+                } else {
+                    this.frameX = 0;
+                }
+            } else {
+                if (this.frame == 0 || this.frame == 4 || this.frame == 8) {
+                    this.frameX = 3;
+                } else if (this.frame == 1 || this.frame == 5 || this.frame == 9) {
+                    this.frameX = 2;
+                } else if (this.frame == 2 || this.frame == 6 || this.frame == 10) {
+                    this.frameX = 1;
+                } else {
+                    this.frameX = 0;
+                }
+            }
         }
     }
 
@@ -86,12 +139,19 @@ class Player {
             ctx.stroke();
         }
 
-        // Draw a circle representing the character
-        ctx.fillStyle = 'red';
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, 50, 0, Math.PI*2);
-        ctx.fill();
-        ctx.closePath();
+        //Rotate the character towards moving direction
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angle);
+
+        // Animate the character
+        if (this.x >= mouse.x) {
+            ctx.drawImage(playerLeft, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, 0 - 60, 0 - 45, this.spriteWidth/4, this.spriteHeight/4);
+        } else {
+            ctx.drawImage(playerRight, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, 0 - 60, 0 - 45, this.spriteWidth/4, this.spriteHeight/4);
+        }
+
+        ctx.restore();
 
     }
 }
@@ -123,8 +183,8 @@ class Bubble {
     draw() {
         ctx.fillStyle = 'blue';
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2); //I'm defining the shape of the circle
-        ctx.fill(); //to draw the circle
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2);
+        ctx.fill(); 
         ctx.closePath();
         ctx.stroke();
     }
