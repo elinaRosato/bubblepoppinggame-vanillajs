@@ -164,6 +164,10 @@ let player = new Player();
 const bubblesArray = [];
 let bubbleFrequence = 50;
 
+//Bubble animation spritesheet
+const bubbleImage = new Image();
+bubbleImage.src = 'images/bubble_pop_under_water_spritesheet.png';
+
 class Bubble {
     constructor() {
         this.x = Math.random() * canvas.width;
@@ -171,6 +175,12 @@ class Bubble {
         this.radius = 50;
         this.speed = Math.random() * 5 + 1;
         this.distance;
+        this.frameX = 0;
+        this.frameY = 0;
+        this.frame = 0;
+        this.spriteWidth = 394;
+        this.spriteHeight = 511;
+        this.popped = false;
     }
     update() { 
         //Distance betwen bubble and player
@@ -181,12 +191,7 @@ class Bubble {
         this.y -= this.speed;
     }
     draw() {
-        ctx.fillStyle = 'blue';
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2);
-        ctx.fill(); 
-        ctx.closePath();
-        ctx.stroke();
+        ctx.drawImage(bubbleImage, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x - 54, this.y - 83, this.spriteWidth/3.7, this.spriteHeight/3.7);
     }
 }
 
@@ -206,10 +211,31 @@ function handleBubbles () {
             i--;
         }
         //Pop the bubbles
-        if (bubble.distance < player.radius + bubble.radius) {
+        else if (bubble.distance < player.radius + bubble.radius) {
+            bubble.popped = true;
+        }
+        //Animate pop
+        if (bubble.popped) {
+            if (bubble.frame <= 5) {
+                //Change sprite every 5 frames
+                if (gameFrame % 5 == 0) {
+                    bubble.frame++;
+                    //Setting frameY
+                    bubble.frame >= 3 ? bubble.frameY = 1 : bubble.frameY = 0;
+                    //Setting frameX
+                    if (bubble.frame == 2 || bubble.frame == 5) {
+                        bubble.frameX = 2;
+                    } else if (bubble.frame == 1 || bubble.frame == 4) {
+                        bubble.frameX = 1;
+                    } else {
+                        bubble.frameX = 0;
+                    }
+                }
+            } else {
                 score++;
                 bubblesArray.splice(i,1);
                 i--;
+            }
         }
     });
 }
