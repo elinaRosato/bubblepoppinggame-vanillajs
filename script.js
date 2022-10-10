@@ -274,6 +274,12 @@ function handleBackground() {
 
 let enemiesArray = [];
 
+//Enemies animation spritesheets
+const enemyLeft = new Image();
+enemyLeft.src = 'images/enemy_swim_left.png';
+const enemyRight = new Image();
+enemyRight.src = 'images/enemy_swim_right.png';
+
 class Enemy {
     constructor() {
         this.movesTo = Math.random() < 0.5 ? 'right' : 'left';
@@ -282,6 +288,12 @@ class Enemy {
         this.y = Math.random() * canvas.height;
         this.speed = Math.random() * 3 + 1;
         this.distance;
+        this.image = this.movesTo == 'right' ? enemyRight : enemyLeft;
+        this.frameX = 0;
+        this.frameY = 0;
+        this.frame = 0;
+        this.spriteWidth = 418;
+        this.spriteHeight = 397;
     }
     update() { 
         //move enemy left or right
@@ -296,12 +308,7 @@ class Enemy {
         this.distance = Math.sqrt(dx*dx + dy*dy);
     }
     draw() {
-        ctx.fillStyle = 'black';
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2);
-        ctx.fill();
-        ctx.closePath();
-        ctx.stroke();
+        ctx.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.movesTo == 'right' ? this.x - 70 : this.x -60, this.y - 60, this.spriteWidth/3.3, this.spriteHeight/3.3);
     }
 }
 
