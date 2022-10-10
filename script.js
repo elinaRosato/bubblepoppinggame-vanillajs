@@ -306,6 +306,46 @@ class Enemy {
         const dx = this.x - player.x;
         const dy = this.y - player.y;
         this.distance = Math.sqrt(dx*dx + dy*dy);
+        //Change sprite every 5 frames
+        if (gameFrame % 5 == 0) {
+            this.frame++;
+            if (this.frame > 11) {
+                this.frame = 0;
+            }
+            //Setting frameX and frameY
+            if (this.frame <= 3) {
+                this.frameY = 0;
+            } else if (this.frame <= 7) {
+                this.frameY = 1;
+            } else if (this.frame <= 11){
+                this.frameY = 2;
+            } else {
+                this.frameY = 0;
+            }
+            if (this.movesTo == 'left') {
+                if (this.frame == 0 || this.frame == 4 || this.frame == 8) {
+                    this.frameX = 0;
+                } else if (this.frame == 1 || this.frame == 5 || this.frame == 9) {
+                    this.frameX = 1;
+                } else if (this.frame == 2 || this.frame == 6 || this.frame == 10) {
+                    this.frameX = 2;
+                } else if(this.frame == 3 || this.frame == 7 || this.frame == 11){
+                    this.frameX = 3;
+                } else {
+                    this.frameX = 0;
+                }
+            } else {
+                if (this.frame == 0 || this.frame == 4 || this.frame == 8) {
+                    this.frameX = 3;
+                } else if (this.frame == 1 || this.frame == 5 || this.frame == 9) {
+                    this.frameX = 2;
+                } else if (this.frame == 2 || this.frame == 6 || this.frame == 10) {
+                    this.frameX = 1;
+                } else {
+                    this.frameX = 0;
+                }
+            }
+        }
     }
     draw() {
         ctx.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.movesTo == 'right' ? this.x - 70 : this.x -60, this.y - 60, this.spriteWidth/3.3, this.spriteHeight/3.3);
