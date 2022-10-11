@@ -168,6 +168,12 @@ let bubbleFrequence = 50;
 const bubbleImage = new Image();
 bubbleImage.src = 'images/bubble_pop_under_water_spritesheet.png';
 
+//Bubble pop sound effect
+const bubblePop1 = document.createElement('audio');
+bubblePop1.src = 'sounds/BubblePop1.ogg';
+const bubblePop2 = document.createElement('audio');
+bubblePop2.src = 'sounds/BubblePop2.ogg';
+
 class Bubble {
     constructor() {
         this.x = Math.random() * canvas.width;
@@ -181,6 +187,8 @@ class Bubble {
         this.spriteWidth = 394;
         this.spriteHeight = 511;
         this.popped = false;
+        //random sound when bubble is popped
+        this.sound = Math.random() < 0.5 ? 1 : 2;
     }
     update() { 
         //Distance betwen bubble and player
@@ -211,7 +219,8 @@ function handleBubbles () {
             i--;
         }
         //Pop the bubbles
-        else if (bubble.distance < player.radius + bubble.radius) {
+        else if (!bubble.popped && bubble.distance < player.radius + bubble.radius) {
+            bubble.sound == 1 ? bubblePop1.play() : bubblePop2.play();
             bubble.popped = true;
         }
         //Animate pop
