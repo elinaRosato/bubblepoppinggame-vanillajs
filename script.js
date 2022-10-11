@@ -4,6 +4,7 @@
 const body = document.getElementById('body');
 const canvas = document.getElementById('gameCanvas');
 const scoreOnScreen = document.getElementById('scoreValue');
+const lifesOnScreen = document.getElementById('lifesValue');
 const playPauseBtn = document.getElementById('pauseBtn');
 const soundBtn = document.getElementById('soundBtn');
 const gameInit = document.getElementById('gameInit');
@@ -49,6 +50,34 @@ canvas.addEventListener('mouseup', function(){
     mouse.click = false;
 });
 
+//Repeating background ----------------------------------------------------------------------------------------------
+
+const backgoundImage = new Image();
+backgoundImage.src = 'images/background_waves.jpg';
+
+const Background = {
+    x1: 0,
+    x2: canvas.width,
+    y: 0,
+    width: canvas.width,
+    height: canvas.height/3.3
+}
+
+function handleBackground() {
+    //First Image
+    Background.x1 -= gameSpeed;
+    if (Background.x1 <= -Background.width) {
+        Background.x1 = Background.width;
+    }
+    ctx.drawImage(backgoundImage, Background.x1, Background.y, Background.width, Background.height);
+
+    //Second Image
+    Background.x2 -= gameSpeed;
+    if (Background.x2 <= -Background.width) {
+        Background.x2 = Background.width;
+    }
+    ctx.drawImage(backgoundImage, Background.x2, Background.y, Background.width, Background.height);
+}
 
 //Player character -----------------------------------------------------------------------------------------------
 
@@ -249,35 +278,6 @@ function handleBubbles () {
     });
 }
 
-//Repeating background ----------------------------------------------------------------------------------------------
-
-const backgoundImage = new Image();
-backgoundImage.src = 'images/background_waves.jpg';
-
-const Background = {
-    x1: 0,
-    x2: canvas.width,
-    y: 0,
-    width: canvas.width,
-    height: canvas.height/3.3
-}
-
-function handleBackground() {
-    //First Image
-    Background.x1 -= gameSpeed;
-    if (Background.x1 <= -Background.width) {
-        Background.x1 = Background.width;
-    }
-    ctx.drawImage(backgoundImage, Background.x1, Background.y, Background.width, Background.height);
-
-    //Second Image
-    Background.x2 -= gameSpeed;
-    if (Background.x2 <= -Background.width) {
-        Background.x2 = Background.width;
-    }
-    ctx.drawImage(backgoundImage, Background.x2, Background.y, Background.width, Background.height);
-}
-
 
 //Enemies -----------------------------------------------------------------------------------------------------------
 
@@ -381,7 +381,12 @@ function handleEnemies () {
 
         //Game over
         else if (enemy.distance < player.radius + enemy.radius) {
-            handleGameOver();
+            lifes--;
+            enemiesArray.splice(i,1);
+            i--;
+            if (lifes == 0) {
+                handleGameOver();
+            }
         }
     });
 }
@@ -416,6 +421,7 @@ function animate() {
     player.draw();
     handleBubbles();
     scoreOnScreen.innerText = score;
+    lifesOnScreen.innerText = lifes;
     //increase game frame, it increases endlessly as the game runs. I'll use it to add periodic events to the game.
     gameFrame++;
     //Create animation loop though recursion

@@ -41,12 +41,26 @@ body {
     background: linear-gradient(180deg, rgba(0,134,190,1) 32%, rgba(6,72,184,1) 61%, rgba(18,4,85,1) 98%);
 }
 
+.bottomControllerContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
 .score {
     display: flex;
     margin-left: 5vw;
 }
 
 .scoreValue{
+    padding-left: 1vw;
+}
+
+.lifes {
+    display: flex;
+    margin-right: 5vw;
+}
+
+.lifesValue{
     padding-left: 1vw;
 }
 
