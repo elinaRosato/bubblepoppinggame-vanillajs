@@ -27,7 +27,7 @@ body {
     width: 1820px;
     margin: auto;
     margin-top: 2vh;
-    padding-top: 1vh;
+    padding-top: 4vh;
     background: linear-gradient(142deg, rgba(0,178,255,1) 35%, rgba(0,133,239,1) 100%);
     border: 4px solid #0078D3;
     border-radius: 130px;
@@ -49,28 +49,70 @@ body {
     background: linear-gradient(180deg, rgba(0,134,190,1) 32%, rgba(6,72,184,1) 61%, rgba(18,4,85,1) 98%);
 }
 
+/* Controllers -----------------------------------------------------------------------------------------------*/
+
+/* Top Controller */
+
+.topControllerContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 4vw;
+    margin-bottom: -120px;
+}
+
+.btnContainer {
+    z-index: 999;
+}
+
+.controllerBtn {
+    height: 70px;
+}
+
+/* Bottom Controller */
+
 .bottomControllerContainer {
     display: flex;
     justify-content: space-between;
+    align-items: baseline;
+    padding: 0 4vw;
+    margin-top: -150px;
 }
 
-.score {
+.scoreContainer {
+    background-image: url('images/score_counter.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 400px;
+    height: 210px;
+    padding-top: 55px;
+    padding-right: 50px;
+    padding-left: 190px;
+}
+
+.scoreValue {
+    font-size: 60px;
+    color: #303242;
+    text-align: center;
+}
+
+.rightContainer {
     display: flex;
-    margin-left: 5vw;
 }
 
-.scoreValue{
-    padding-left: 1vw;
+.superPowerIcon {
+    border-radius: 50px;
+    height: 90px;
+    margin-right: 1vw;
 }
 
-.lifes {
-    display: flex;
-    margin-right: 5vw;
+.lifesBar {
+    height: 100px;
 }
 
-.lifesValue{
-    padding-left: 1vw;
-}
+
+
+
 
 .gameOverFrame {
     position: absolute;

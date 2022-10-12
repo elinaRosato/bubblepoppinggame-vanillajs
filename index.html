@@ -20,22 +20,30 @@
     <H1 class="gameTitle">Popping Bubbles</H1>
 
     <div class="gameContainer">
+        <div class="topControllerContainer">
+            <div  class="btnContainer">
+                <img class="controllerBtn" id="pauseBtn" src="images/btn_pause.png" alt="pause btn">
+            </div>
+            <div  class="btnContainer">
+                <img class="controllerBtn" id="soundBtn" src="images/btn_mute.png" alt="Sound btn">
+            </div>
+        </div>
         <div class="canvasContainer">
             <canvas class="gameCanvas" id="gameCanvas"></canvas>
         </div>
         <div class="bottomControllerContainer">
             <div class="scoreContainer">
                 <div class="score">
-                    <p>score: </p>
                     <p class="scoreValue" id="scoreValue">0</p>
                 </div>
             </div>
-            <div class="lifesContainer">
-                <div class="lifes">
-                    <p>lifes: </p>
-                    <p class="lifesValue" id="lifesValue">3</p>
+            <div class="rightContainer">
+                <div class="lifesContainer" id="lifesContainer">
+                    <img class="lifesBar" id="lifesBar" src="images/lifes_3.png" alt="lifesBar">
                 </div>
             </div>
+            
+            
         </div>
     </div>    
 

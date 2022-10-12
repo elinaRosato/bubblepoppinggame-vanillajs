@@ -4,7 +4,6 @@
 const body = document.getElementById('body');
 const canvas = document.getElementById('gameCanvas');
 const scoreOnScreen = document.getElementById('scoreValue');
-const lifesOnScreen = document.getElementById('lifesValue');
 const playPauseBtn = document.getElementById('pauseBtn');
 const soundBtn = document.getElementById('soundBtn');
 const gameInit = document.getElementById('gameInit');
@@ -382,6 +381,7 @@ function handleEnemies () {
         //Game over
         else if (enemy.distance < player.radius + enemy.radius) {
             lifes--;
+            uptadeLifes();
             enemiesArray.splice(i,1);
             i--;
             if (lifes == 0) {
@@ -389,6 +389,21 @@ function handleEnemies () {
             }
         }
     });
+}
+
+//Lifes bar --------------------------------------------------------------------------------------------------------
+
+function uptadeLifes () {
+    const lifesBar = document.getElementById('lifesBar');
+    if (lifes == 3) {
+        lifesBar.src = 'images/lifes_3.png';
+    } else if (lifes == 2) {
+        lifesBar.src = 'images/lifes_2.png';
+    } else if (lifes == 1) {
+        lifesBar.src = 'images/lifes_1.png';
+    } else {
+        lifesBar.src = 'images/lifes_0.png';
+    }
 }
 
 //Game Over ----------------------------------------------------------------------------------------------------------
@@ -421,7 +436,6 @@ function animate() {
     player.draw();
     handleBubbles();
     scoreOnScreen.innerText = score;
-    lifesOnScreen.innerText = lifes;
     //increase game frame, it increases endlessly as the game runs. I'll use it to add periodic events to the game.
     gameFrame++;
     //Create animation loop though recursion
