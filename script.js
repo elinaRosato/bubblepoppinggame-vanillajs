@@ -49,6 +49,32 @@ canvas.addEventListener('mouseup', function(){
     mouse.click = false;
 });
 
+playPauseBtn.addEventListener('click', function(){
+    play ? play = false : play = true;
+
+    if (play) {
+        animate();
+    }
+    
+    //Change Btn Image
+    if (play) {
+        playPauseBtn.src = 'images/btn_pause.png';
+    } else {
+        playPauseBtn.src = 'images/btn_play.png';
+    }
+});
+
+soundBtn.addEventListener('click', function(){
+    soundOn ? soundOn = false : soundOn = true;
+
+    //Change Btn Image
+    if (soundOn) {
+        soundBtn.src = 'images/btn_soundOn.png';
+    } else {
+        soundBtn.src = 'images/btn_soundOff.png';
+    }
+});
+
 //Repeating background ----------------------------------------------------------------------------------------------
 
 const backgoundImage = new Image();
@@ -248,7 +274,9 @@ function handleBubbles () {
         }
         //Pop the bubbles
         else if (!bubble.popped && bubble.distance < player.radius + bubble.radius) {
-            bubble.sound == 1 ? bubblePop1.play() : bubblePop2.play();
+            if (soundOn) {
+                bubble.sound == 1 ? bubblePop1.play() : bubblePop2.play();
+            }
             bubble.popped = true;
         }
         //Animate pop
