@@ -464,6 +464,41 @@ class PowerUp {
     }
 }
 
+//Extra life 
+
+//Extra life image
+const extraLifeImage = new Image();
+extraLifeImage.src = 'images/extra_life.png';
+
+class ExtraLife extends PowerUp {
+    constructor() {
+        super(extraLifeImage);
+    }
+    handle() {
+        //Push extra life up every 1300 frames
+        if (lifes < 3 && this.speed == 0 && gameFrame % 1300 == 0) {  
+            this.speed = Math.random() * 6 + 1;
+        } else {
+            this.draw();
+            this.update();
+            //Pick extra life and reset
+            if (this.y < 0 - this.radius*2) {
+                this.reset();
+            } else if (this.distance < player.radius + this.radius) {
+                lifes++;
+                uptadeLifes();
+                this.reset();
+            }
+        }
+    }
+}
+
+const extraLife = new ExtraLife();
+
+function handlePowerUps() {
+    extraLife.handle();
+}
+
 //Game Over ----------------------------------------------------------------------------------------------------------
 
 function handleGameOver () {
@@ -493,6 +528,7 @@ function animate() {
     //draw player
     player.draw();
     handleBubbles();
+    handlePowerUps();
     scoreOnScreen.innerText = score;
     //increase game frame, it increases endlessly as the game runs. I'll use it to add periodic events to the game.
     gameFrame++;
