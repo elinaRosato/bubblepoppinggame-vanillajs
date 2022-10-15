@@ -434,6 +434,36 @@ function uptadeLifes () {
     }
 }
 
+//Power-ups-------------------------------------------------------------------------------------------------------
+
+class PowerUp {
+    constructor(img) {
+        this.x = Math.random() * canvas.width;
+        this.y = canvas.height + 100;
+        this.radius = 50;
+        this.speed = 0;
+        this.distance;
+        this.img = img;
+    }
+    update() { 
+        //Move up
+        this.y -= this.speed;
+        //Distance betwen power-up and player
+        const dx = this.x - player.x;
+        const dy = this.y - player.y;
+        this.distance = Math.sqrt(dx*dx + dy*dy);
+    }
+    draw() {
+        ctx.drawImage(this.img, this.x-50, this.y-50, this.radius*2, this.radius*2);
+    }
+    reset() {
+        // Bring extra life back down once it goes out of the canvas top
+            this.x = Math.random() * canvas.width;
+            this.y = canvas.height + 100;
+            this.speed = 0;
+    }
+}
+
 //Game Over ----------------------------------------------------------------------------------------------------------
 
 function handleGameOver () {
