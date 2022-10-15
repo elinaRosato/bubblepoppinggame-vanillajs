@@ -470,6 +470,10 @@ class PowerUp {
 const extraLifeImage = new Image();
 extraLifeImage.src = 'images/extra_life.png';
 
+//Extra life sound effect
+const extraLifeSound = document.createElement('audio');
+extraLifeSound.src = 'sounds/extra_life.flac';
+
 class ExtraLife extends PowerUp {
     constructor() {
         super(extraLifeImage);
@@ -485,6 +489,9 @@ class ExtraLife extends PowerUp {
             if (this.y < 0 - this.radius*2) {
                 this.reset();
             } else if (this.distance < player.radius + this.radius) {
+                if (soundOn) {
+                    extraLifeSound.play();
+                }
                 lifes++;
                 uptadeLifes();
                 this.reset();
