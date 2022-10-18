@@ -317,8 +317,8 @@ const enemyRight = new Image();
 enemyRight.src = 'images/enemy_swim_right.png';
 
 //Enemies collision sound effect
-const enemyCollitionSound = document.createElement('audio');
-enemyCollitionSound.src = 'sounds/ouch0.mp3';
+const enemyCollisionSound = document.createElement('audio');
+enemyCollisionSound.src = 'sounds/ouch0.mp3';
 
 class Enemy {
     constructor() {
@@ -412,7 +412,7 @@ function handleEnemies () {
 
         //Loose a life
         else if (enemy.distance < player.radius + enemy.radius) {
-            if (soundOn) { enemyCollitionSound.play(); }
+            if (soundOn) { enemyCollisionSound.play(); }
             lifes--;
             uptadeLifes();
             enemiesArray.splice(i,1);
