@@ -77,31 +77,58 @@ soundBtn.addEventListener('click', function(){
 
 //Repeating background ----------------------------------------------------------------------------------------------
 
-const backgoundImage = new Image();
-backgoundImage.src = 'images/background_waves.jpg';
+class Background {
+    constructor(backgoundSpeed, backgoundImage) {
+        this.x1 = 0;
+        this.x2 = canvas.width;
+        this.y = 0;
+        this.width = canvas.width;
+        this.height = canvas.height;
+        this.backgoundSpeed = backgoundSpeed;
+        this.backgoundImage = backgoundImage;
+    }
+    moveBackground() {
+        //First Image
+        this.x1 -= this.backgoundSpeed;
+        if (this.x1 <= -this.width) {
+            this.x1 = this.width;
+        }
+        ctx.drawImage(this.backgoundImage, this.x1, this.y, this.width, this.height);
 
-const Background = {
-    x1: 0,
-    x2: canvas.width,
-    y: 0,
-    width: canvas.width,
-    height: canvas.height/3.3
+        //Second Image
+        this.x2 -= this.backgoundSpeed;
+        if (this.x2 <= -this.width) {
+            this.x2 = this.width;
+        }
+        ctx.drawImage(this.backgoundImage, this.x2, this.y, this.width, this.height);
+    }
 }
 
-function handleBackground() {
-    //First Image
-    Background.x1 -= gameSpeed;
-    if (Background.x1 <= -Background.width) {
-        Background.x1 = Background.width;
-    }
-    ctx.drawImage(backgoundImage, Background.x1, Background.y, Background.width, Background.height);
+//Layer 1
+const backgoundImageLayer1 = new Image();
+backgoundImageLayer1.src = 'images/background_level1_paralax1.png';
+let backgoundLayer1 = new Background (gameSpeed/1, backgoundImageLayer1);
 
-    //Second Image
-    Background.x2 -= gameSpeed;
-    if (Background.x2 <= -Background.width) {
-        Background.x2 = Background.width;
-    }
-    ctx.drawImage(backgoundImage, Background.x2, Background.y, Background.width, Background.height);
+//Layer 2
+const backgoundImageLayer2 = new Image();
+backgoundImageLayer2.src = 'images/background_level1_paralax2.png';
+let backgoundLayer2 = new Background (gameSpeed/2.5, backgoundImageLayer2);
+
+//Layer 3
+const backgoundImageLayer3 = new Image();
+backgoundImageLayer3.src = 'images/background_level1_paralax3.png';
+let backgoundLayer3 = new Background (0, backgoundImageLayer3);
+
+//Layer 4
+const backgoundImageLayer4 = new Image();
+backgoundImageLayer4.src = 'images/background_level1_paralax4.png';
+let backgoundLayer4 = new Background (0, backgoundImageLayer4);
+
+function handleBackground() {
+    backgoundLayer1.moveBackground();
+    backgoundLayer2.moveBackground();
+    backgoundLayer3.moveBackground();
+    backgoundLayer4.moveBackground();
 }
 
 //Player character -----------------------------------------------------------------------------------------------
@@ -125,6 +152,7 @@ class Player {
         this.spriteWidth = 498;
         this.spriteHeight = 327;
     }
+
     update() {
         //Distance on the horizontal x-axis and on the vertical y-axis
         const dx = this.x - mouse.x; 
