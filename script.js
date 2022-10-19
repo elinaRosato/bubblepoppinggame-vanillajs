@@ -2,78 +2,144 @@
 
 //Selectors -------------------------------------------------------------------------------------------------------
 const body = document.getElementById('body');
-const canvas = document.getElementById('gameCanvas');
-const scoreOnScreen = document.getElementById('scoreValue');
-const playPauseBtn = document.getElementById('pauseBtn');
-const soundBtn = document.getElementById('soundBtn');
+const gameContainer = document.getElementById('gameContainer');
 const gameInit = document.getElementById('gameInit');
 const gameInitBtn = document.getElementById('gameInitBtnContainer');
-const superPowerContainer = document.getElementById('superPowerContainer');
 
-// Canvas setup
-const ctx = canvas.getContext('2d');
-canvas.height = 900;
-canvas.width = 1750;
+// Canvas setup ---------------------------------------------------------------------------------------------------
+let topController;
+let playPauseBtnContainer;
+let playPauseBtn;
+let soundOnOffBtnContainer;
+let soundOnOffBtn;
+let canvasContainer;
+let canvas;
+let bottomController;
+let scoreContainerBackground;
+let scoreContainer;
+let scoreValue;
+let rightContainer;
+let lifeBarContainer;
+let ctx;
+let canvasPosition;
+let mouse;
 
-//Initializing game ------------------------------------------------------------------------------------------------
-let score = 0;
-let lifes = 3;
-let gameFrame = 0;
-let gameSpeed = 1; //How fast backgound moves - it will increase as game progresses
-let gameOver = false;
-let soundOn = true;
-let play = true;
-
-
-// Mouse interactivity
-let canvasPosition = canvas.getBoundingClientRect();
-onresize = (event) => {
-    canvasPosition = canvas.getBoundingClientRect();
-};
-
-const mouse = {
-    x: canvas.width/2,
-    y: canvas.height/2,
-    click: false
-};
-
-//Event Listeners -------------------------------------------------------------------------------------------------
-
-canvas.addEventListener('mousedown', function(event){
-    mouse.click = true;
-    mouse.x = event.x - canvasPosition.left;
-    mouse.y = event.y - canvasPosition.top;
-});
-
-canvas.addEventListener('mouseup', function(){
-    mouse.click = false;
-});
-
-playPauseBtn.addEventListener('click', function(){
-    play ? play = false : play = true;
-
-    if (play) {
-        animate();
-    }
+function canvasSetUp () {
+    //Create canvas container
+    canvasContainer = document.createElement('div');
+    canvasContainer.classList.add('canvasContainer');
+    gameContainer.appendChild(canvasContainer);
+        //Create canvas element
+        canvas = document.createElement('canvas');
+        canvas.classList.add('gameCanvas');
+        canvasContainer.appendChild(canvas);
+        //Create top controller
+        topController = document.createElement('div');
+        topController.classList.add('topControllerContainer');
+        canvasContainer.appendChild(topController);
+            //Create play-pause btn container
+            playPauseBtnContainer = document.createElement('div');
+            playPauseBtnContainer.classList.add('btnContainer');
+            topController.appendChild(playPauseBtnContainer);
+                //Create play-pause btn
+                playPauseBtn = document.createElement('img');
+                playPauseBtn.classList.add('controllerBtn');
+                playPauseBtn.src = 'images/btn_pause.png';
+                playPauseBtnContainer.appendChild(playPauseBtn);
+            //Create sound on-off btn container
+            soundOnOffBtnContainer = document.createElement('div');
+            soundOnOffBtnContainer.classList.add('btnContainer');
+            topController.appendChild(soundOnOffBtnContainer);
+                //Create sound on-off btn
+                soundOnOffBtn = document.createElement('img');
+                soundOnOffBtn.classList.add('controllerBtn');
+                soundOnOffBtn.src = 'images/btn_soundOn.png';
+                soundOnOffBtnContainer.appendChild(soundOnOffBtn);
+        //Create bottom controller
+        bottomController = document.createElement('div');
+        bottomController.classList.add('bottomControllerContainer');
+        canvasContainer.appendChild(bottomController);
+            //Create score container
+            scoreContainerBackground = document.createElement('div');
+            scoreContainerBackground.classList.add('scoreContainerBackground');
+            bottomController.appendChild(scoreContainerBackground);
+                //Create score
+                scoreContainer = document.createElement('div');
+                scoreContainer.classList.add('scoreContainer');
+                scoreContainerBackground.appendChild(scoreContainer);
+                    //Create score text
+                    scoreValue = document.createElement('p');
+                    scoreValue.classList.add('scoreValue');
+                    scoreContainer.appendChild(scoreValue);
+            //Create right container
+            rightContainer = document.createElement('div');
+            rightContainer.classList.add('rightContainer');
+            bottomController.appendChild(rightContainer);
+                //Create life bar container
+                lifeBarContainer = document.createElement('div');
+                lifeBarContainer.classList.add('lifesContainer');
+                bottomController.appendChild(lifeBarContainer);
+                    //Create life bar container
+                    lifesBar = document.createElement('img');
+                    lifesBar.classList.add('lifesBar');
+                    lifesBar.src = 'images/lifes_3.png';
+                    lifeBarContainer.appendChild(lifesBar);
     
-    //Change Btn Image
-    if (play) {
-        playPauseBtn.src = 'images/btn_pause.png';
-    } else {
-        playPauseBtn.src = 'images/btn_play.png';
-    }
-});
+    ctx = canvas.getContext('2d');
+    canvas.height = 900;
+    canvas.width = 1750;
 
-soundBtn.addEventListener('click', function(){
-    soundOn ? soundOn = false : soundOn = true;
+    // Mouse interactivity
+    canvasPosition = canvas.getBoundingClientRect();
+    onresize = (event) => {
+        canvasPosition = canvas.getBoundingClientRect();
+    };
 
-    //Change Btn Image
-    if (soundOn) {
-        soundBtn.src = 'images/btn_soundOn.png';
-    } else {
-        soundBtn.src = 'images/btn_soundOff.png';
-    }
-});
+    mouse = {
+        x: canvas.width/2,
+        y: canvas.height/2,
+        click: false
+    };
+
+    
+    //Event Listeners -------------------------------------------------------------------------------------------------
+
+    canvas.addEventListener('mousedown', function(event){
+        mouse.click = true;
+        mouse.x = event.x - canvasPosition.left;
+        mouse.y = event.y - canvasPosition.top;
+    });
+
+    canvas.addEventListener('mouseup', function(){
+        mouse.click = false;
+    });
+
+    playPauseBtn.addEventListener('click', function(){
+        play ? play = false : play = true;
+
+        if (play) {
+            animate();
+        }
+        
+        //Change Btn Image
+        if (play) {
+            playPauseBtn.src = 'images/btn_pause.png';
+        } else {
+            playPauseBtn.src = 'images/btn_play.png';
+        }
+    });
+
+    soundOnOffBtn.addEventListener('click', function(){
+        soundOn ? soundOn = false : soundOn = true;
+
+        //Change Btn Image
+        if (soundOn) {
+            soundOnOffBtn.src = 'images/btn_soundOn.png';
+        } else {
+            soundOnOffBtn.src = 'images/btn_soundOff.png';
+        }
+    });
+
 
 //Repeating background ----------------------------------------------------------------------------------------------
 
@@ -455,7 +521,6 @@ function handleEnemies () {
 //Lifes bar --------------------------------------------------------------------------------------------------------
 
 function uptadeLifes () {
-    const lifesBar = document.getElementById('lifesBar');
     if (lifes == 3) {
         lifesBar.src = 'images/lifes_3.png';
     } else if (lifes == 2) {
@@ -569,11 +634,36 @@ function animate() {
     player.draw();
     handleBubbles();
     handlePowerUps();
-    scoreOnScreen.innerText = score;
+    scoreValue.innerText = score;
     //increase game frame, it increases endlessly as the game runs. I'll use it to add periodic events to the game.
     gameFrame++;
     //Create animation loop though recursion
     if (!gameOver && play) requestAnimationFrame(animate); 
 }
 
-animate();
+if (play) {
+    animate();
+}
+
+}
+
+//Initializing game ------------------------------------------------------------------------------------------------
+let score = 0;
+let lifes = 3;
+let gameFrame = 0;
+let gameSpeed = 1;
+let gameOver = false;
+let soundOn = true;
+let play = false;
+
+gameInitBtn.addEventListener('click', function(){
+    play ? play = false : play = true;
+
+    gameInit.remove();
+
+    if (play) {
+        canvasSetUp();
+    }
+    
+})
+
