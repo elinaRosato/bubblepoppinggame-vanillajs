@@ -217,23 +217,25 @@ class Player {
         this.frame = 0;
         this.spriteWidth = 498;
         this.spriteHeight = 327;
+        this.dx;
+        this.dy;
     }
 
     update() {
         //Distance on the horizontal x-axis and on the vertical y-axis
-        const dx = this.x - mouse.x; 
-        const dy = this.y - mouse.y;
+        this.dx = this.x - mouse.x; 
+        this.dy = this.y - mouse.y;
 
         //Move the character towards the mouse position
         if (this.x != mouse.x) {
-            this.x -= dx/this.speed;
+            this.x -= this.dx/this.speed;
         } 
         if (this.y != mouse.y) {
-            this.y -= dy/this.speed;
+            this.y -= this.dy/this.speed;
         }
 
         //calculate angle of movement
-        let theta = Math.atan2(dy, dx)
+        let theta = Math.atan2(this.dy, this.dx)
         this.angle = theta;
 
         //Change sprite every 5 frames
@@ -542,6 +544,7 @@ class PowerUp {
         this.speed = 0;
         this.distance;
         this.img = img;
+        this.PUSound = new Audio ('sounds/extra_life.flac');
     }
     update() { 
         //Move up
@@ -557,7 +560,7 @@ class PowerUp {
     reset() {
         // Bring extra life back down once it goes out of the canvas top
             this.x = Math.random() * canvas.width;
-            this.y = canvas.height + 100;
+            this.y = canvas.height + this.radius*2;
             this.speed = 0;
     }
 }
@@ -602,7 +605,60 @@ const extraLife = new ExtraLife();
 
 function handlePowerUps() {
     extraLife.handle();
+    speedPU.handle();
 }
+
+//Speed power-up 
+
+//Speed power-up image
+const speedPUImage = new Image();
+speedPUImage.src = 'images/speed_PU.png';
+
+//Speed power-up sound effect
+const speedPUSound = document.createElement('audio');
+speedPUSound.src = 'sounds/speedPUSound.mp3';
+
+class SpeedPU extends PowerUp {
+    constructor() {
+        super(speedPUImage);
+        this.startingFrame;
+        this.speedPUOn = false;
+    }
+    handle() {
+        //Push speed power-up every 1300 frames
+        if (this.speed == 0 && gameFrame > 2500 && gameFrame % 1300 == 0) {  
+            this.speed = Math.random() * 6 + 1;
+        } else {
+            this.draw();
+            this.update();
+            //Pick speed power-up and reset
+            if (this.y < 0 - this.radius*2) {
+                this.reset();
+            } else if (this.distance < player.radius + this.radius) {
+                if (soundOn) {
+                    this.PUSound.play();
+                }
+                this.startingFrame = gameFrame;
+                this.speedPUOn = true;
+                player.speed = 10;
+                this.reset();
+            }
+        }
+        //Play speed power-up sound
+        if (soundOn && this.speedPUOn && (player.dx > 2 || player.dy > 2)) {
+            speedPUSound.play();
+        } else {
+            speedPUSound.pause();
+        }
+        //Stop speed power-up
+        if (this.speedPUOn && gameFrame > this.startingFrame + 300) {
+            player.speed = 40;
+            this.speedPUOn = false;
+        }
+    }
+}
+
+const speedPU = new SpeedPU();
 
 //Game Over ----------------------------------------------------------------------------------------------------------
 
