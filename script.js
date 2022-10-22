@@ -20,9 +20,12 @@ let scoreContainer;
 let scoreValue;
 let rightContainer;
 let lifeBarContainer;
+let powerUpsContainer;
+let speedIcon;
 let ctx;
 let canvasPosition;
 let mouse;
+
 
 function canvasSetUp () {
     //Create canvas container
@@ -84,6 +87,10 @@ function canvasSetUp () {
                     lifesBar.classList.add('lifesBar');
                     lifesBar.src = 'images/lifes_3.png';
                     lifeBarContainer.appendChild(lifesBar);
+                //Create power-ups container
+                powerUpsContainer = document.createElement('div');
+                powerUpsContainer.classList.add('powerUpsContainer');
+                bottomController.appendChild(powerUpsContainer);
     
     ctx = canvas.getContext('2d');
     canvas.height = 900;
@@ -626,7 +633,7 @@ class SpeedPU extends PowerUp {
     }
     handle() {
         //Push speed power-up every 1300 frames
-        if (this.speed == 0 && gameFrame > 2500 && gameFrame % 1300 == 0) {  
+        if (!this.speedPUOn && gameFrame > 250 && gameFrame % 130 == 0) {  
             this.speed = Math.random() * 6 + 1;
         } else {
             this.draw();
@@ -642,6 +649,11 @@ class SpeedPU extends PowerUp {
                 this.speedPUOn = true;
                 player.speed = 10;
                 this.reset();
+                //Add speed icon to power-ups container
+                speedIcon = document.createElement('img');
+                speedIcon.classList.add('powerUp');
+                speedIcon.src = speedPUImage.src;
+                lifeBarContainer.appendChild(speedIcon);
             }
         }
         //Play speed power-up sound
@@ -654,6 +666,8 @@ class SpeedPU extends PowerUp {
         if (this.speedPUOn && gameFrame > this.startingFrame + 300) {
             player.speed = 40;
             this.speedPUOn = false;
+            //Remove speed icon from power-ups container
+            speedIcon.remove();
         }
     }
 }
