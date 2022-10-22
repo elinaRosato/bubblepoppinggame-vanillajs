@@ -22,6 +22,7 @@ let rightContainer;
 let lifeBarContainer;
 let powerUpsContainer;
 let speedIcon;
+let boostIcon;
 let ctx;
 let canvasPosition;
 let mouse;
@@ -610,11 +611,6 @@ class ExtraLife extends PowerUp {
 
 const extraLife = new ExtraLife();
 
-function handlePowerUps() {
-    extraLife.handle();
-    speedPU.handle();
-}
-
 //Speed power-up 
 
 //Speed power-up image
@@ -673,6 +669,71 @@ class SpeedPU extends PowerUp {
 }
 
 const speedPU = new SpeedPU();
+
+//Boost power-up 
+
+//Boost power-up image
+const boostPUImage = new Image();
+boostPUImage.src = 'images/boost_PU.png';
+
+//boost power-up sound effect
+const boostPUSound = document.createElement('audio');
+boostPUSound.src = 'sounds/boostPUSound.wav';
+
+class BoostPU extends PowerUp {
+    constructor() {
+        super(boostPUImage);
+        this.startingFrame;
+        this.boostPUOn = false;
+    }
+    handle() {
+        //Push boost power-up every 1300 frames
+        if (!this.boostPUOn && gameFrame > 350 && gameFrame % 230 == 0) {  
+            this.speed = Math.random() * 6 + 1;
+        } else {
+            this.draw();
+            this.update();
+            //Pick boost power-up and reset
+            if (this.y < 0 - this.radius*2) {
+                this.reset();
+            } else if (this.distance < player.radius + this.radius) {
+                if (soundOn) {
+                    this.PUSound.play();
+                }
+                this.startingFrame = gameFrame;
+                this.boostPUOn = true;
+                bubbleFrequence = 2;
+                this.reset();
+                //Add boost icon to power-ups container
+                boostIcon = document.createElement('img');
+                boostIcon.classList.add('powerUp');
+                boostIcon.src = boostPUImage.src;
+                lifeBarContainer.appendChild(boostIcon);
+            }
+        }
+        //Play boost power-up sound
+        if (soundOn && this.boostPUOn) {
+            boostPUSound.play();
+        } else {
+            boostPUSound.pause();
+        }
+        //Stop boost power-up
+        if (this.boostPUOn && gameFrame > this.startingFrame + 300) {
+            this.boostPUOn = false;
+            bubbleFrequence = 50;
+            //Remove boost icon from power-ups container
+            boostIcon.remove();
+        }
+    }
+}
+
+const boostPU = new BoostPU();
+
+function handlePowerUps() {
+    extraLife.handle();
+    speedPU.handle();
+    boostPU.handle();
+}
 
 //Game Over ----------------------------------------------------------------------------------------------------------
 
