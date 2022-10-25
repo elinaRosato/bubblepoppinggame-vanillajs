@@ -629,7 +629,7 @@ class SpeedPU extends PowerUp {
     }
     handle() {
         //Push speed power-up every 1300 frames
-        if (!this.speedPUOn && gameFrame > 250 && gameFrame % 130 == 0) {  
+        if (!this.speedPUOn && this.speed == 0 && gameFrame > 250 && gameFrame % 130 == 0) {  
             this.speed = Math.random() * 6 + 1;
         } else {
             this.draw();
@@ -688,7 +688,7 @@ class BoostPU extends PowerUp {
     }
     handle() {
         //Push boost power-up every 1300 frames
-        if (!this.boostPUOn && gameFrame > 350 && gameFrame % 230 == 0) {  
+        if (!this.boostPUOn && this.speed == 0 && gameFrame > 350 && gameFrame % 230 == 0) {  
             this.speed = Math.random() * 6 + 1;
         } else {
             this.draw();
