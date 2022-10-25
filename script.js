@@ -6,6 +6,27 @@ const gameContainer = document.getElementById('gameContainer');
 const gameInit = document.getElementById('gameInit');
 const gameInitBtn = document.getElementById('gameInitBtnContainer');
 
+
+//Initializing game ------------------------------------------------------------------------------------------------
+let score = 0;
+let lifes = 3;
+let gameFrame = 0;
+let gameSpeed = 1;
+let gameOver = false;
+let soundOn = true;
+let play = false;
+
+gameInitBtn.addEventListener('click', function(){
+    play ? play = false : play = true;
+
+    gameInit.remove();
+
+    if (play) {
+        canvasSetUp();
+    }
+    
+})
+
 // Canvas setup ---------------------------------------------------------------------------------------------------
 let topController;
 let playPauseBtnContainer;
@@ -23,10 +44,10 @@ let lifeBarContainer;
 let powerUpsContainer;
 let speedIcon;
 let boostIcon;
+let magnetIcon;
 let ctx;
 let canvasPosition;
 let mouse;
-
 
 function canvasSetUp () {
     //Create canvas container
@@ -353,8 +374,18 @@ class Bubble {
         const dx = this.x - player.x;
         const dy = this.y - player.y;
         this.distance = Math.sqrt(dx*dx + dy*dy);
-        //Move bubbles up
-        this.y -= this.speed;
+        //Magnet power-up: move bubbles towards player
+        if (magnetPU.magnetPUOn) {
+            if (this.x != player.x) {
+                this.x > player.x ? this.x -= this.speed : this.x += this.speed;
+            }
+            if (this.y != player.y) {
+                this.y > player.y ? this.y -= this.speed : this.y += this.speed;
+            }
+        } else {
+            //Move bubbles up
+            this.y -= this.speed;
+        }
     }
     draw() {
         ctx.drawImage(bubbleImage, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x - 54, this.y - 83, this.spriteWidth/3.7, this.spriteHeight/3.7);
@@ -378,7 +409,7 @@ function handleBubbles () {
         }
         //Pop the bubbles
         else if (!bubble.popped && bubble.distance < player.radius + bubble.radius) {
-            if (soundOn) {
+            if (play && soundOn) {
                 bubble.sound == 1 ? bubblePop1.play() : bubblePop2.play();
             }
             bubble.popped = true;
@@ -516,7 +547,7 @@ function handleEnemies () {
 
         //Loose a life
         else if (enemy.distance < player.radius + enemy.radius) {
-            if (soundOn) { enemyCollisionSound.play(); }
+            if (play && soundOn) { enemyCollisionSound.play(); }
             lifes--;
             uptadeLifes();
             enemiesArray.splice(i,1);
@@ -573,7 +604,7 @@ class PowerUp {
     }
 }
 
-//Extra life 
+//Extra life ------------------------------------------------------
 
 //Extra life image
 const extraLifeImage = new Image();
@@ -598,7 +629,7 @@ class ExtraLife extends PowerUp {
             if (this.y < 0 - this.radius*2) {
                 this.reset();
             } else if (this.distance < player.radius + this.radius) {
-                if (soundOn) {
+                if (play && soundOn) {
                     extraLifeSound.play();
                 }
                 lifes++;
@@ -611,7 +642,7 @@ class ExtraLife extends PowerUp {
 
 const extraLife = new ExtraLife();
 
-//Speed power-up 
+//Speed power-up ------------------------------------------------------
 
 //Speed power-up image
 const speedPUImage = new Image();
@@ -638,7 +669,7 @@ class SpeedPU extends PowerUp {
             if (this.y < 0 - this.radius*2) {
                 this.reset();
             } else if (this.distance < player.radius + this.radius) {
-                if (soundOn) {
+                if (play && soundOn) {
                     this.PUSound.play();
                 }
                 this.startingFrame = gameFrame;
@@ -653,7 +684,7 @@ class SpeedPU extends PowerUp {
             }
         }
         //Play speed power-up sound
-        if (soundOn && this.speedPUOn && (player.dx > 2 || player.dy > 2)) {
+        if (play && soundOn && this.speedPUOn && (player.dx > 2 || player.dy > 2)) {
             speedPUSound.play();
         } else {
             speedPUSound.pause();
@@ -670,7 +701,7 @@ class SpeedPU extends PowerUp {
 
 const speedPU = new SpeedPU();
 
-//Boost power-up 
+//Boost power-up ------------------------------------------------------
 
 //Boost power-up image
 const boostPUImage = new Image();
@@ -697,7 +728,7 @@ class BoostPU extends PowerUp {
             if (this.y < 0 - this.radius*2) {
                 this.reset();
             } else if (this.distance < player.radius + this.radius) {
-                if (soundOn) {
+                if (play && soundOn) {
                     this.PUSound.play();
                 }
                 this.startingFrame = gameFrame;
@@ -712,7 +743,7 @@ class BoostPU extends PowerUp {
             }
         }
         //Play boost power-up sound
-        if (soundOn && this.boostPUOn) {
+        if (play && soundOn && this.boostPUOn) {
             boostPUSound.play();
         } else {
             boostPUSound.pause();
@@ -729,10 +760,60 @@ class BoostPU extends PowerUp {
 
 const boostPU = new BoostPU();
 
+//Magnet power-up ------------------------------------------------------
+
+//Magnet power-up image
+const magnetPUImage = new Image();
+magnetPUImage.src = 'images/magnet_PU.png';
+
+class MagnetPU extends PowerUp {
+    constructor() {
+        super(magnetPUImage);
+        this.startingFrame;
+        this.magnetPUOn = false;
+    }
+    handle() {
+        //Push magnet power-up every 1300 frames
+        if (!this.magnetPUOn && this.speed == 0 && gameFrame > 350 && gameFrame % 230 == 0) {  
+            this.speed = Math.random() * 6 + 1;
+        } else {
+            this.draw();
+            this.update();
+            //Pick magnet power-up and reset
+            if (this.y < 0 - this.radius*2) {
+                this.reset();
+            } else if (this.distance < player.radius + this.radius) {
+                if (play && soundOn) {
+                    this.PUSound.play();
+                }
+                this.startingFrame = gameFrame;
+                this.magnetPUOn = true;
+                this.reset();
+                //Add magnet icon to power-ups container
+                magnetIcon = document.createElement('img');
+                magnetIcon.classList.add('powerUp');
+                magnetIcon.src = magnetPUImage.src;
+                lifeBarContainer.appendChild(magnetIcon);
+            }
+        }
+        //Stop magnet power-up
+        if (this.magnetPUOn && gameFrame > this.startingFrame + 1200) {
+            this.magnetPUOn = false;
+            //Remove magnet icon from power-ups container
+            magnetIcon.remove();
+        }
+    }
+}
+
+const magnetPU = new MagnetPU();
+
+//Handle power-ups ------------------------------------------------------
+
 function handlePowerUps() {
     extraLife.handle();
     speedPU.handle();
     boostPU.handle();
+    magnetPU.handle();
 }
 
 //Game Over ----------------------------------------------------------------------------------------------------------
@@ -777,24 +858,4 @@ if (play) {
 }
 
 }
-
-//Initializing game ------------------------------------------------------------------------------------------------
-let score = 0;
-let lifes = 3;
-let gameFrame = 0;
-let gameSpeed = 1;
-let gameOver = false;
-let soundOn = true;
-let play = false;
-
-gameInitBtn.addEventListener('click', function(){
-    play ? play = false : play = true;
-
-    gameInit.remove();
-
-    if (play) {
-        canvasSetUp();
-    }
-    
-})
 
