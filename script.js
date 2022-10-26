@@ -48,6 +48,8 @@ let magnetIcon;
 let ctx;
 let canvasPosition;
 let mouse;
+let bubblesArray = [];
+
 
 function canvasSetUp () {
     //Create canvas container
@@ -340,7 +342,6 @@ let player = new Player();
 
 // Bubbles -----------------------------------------------------------------------------------------------------
 
-const bubblesArray = [];
 let bubbleFrequence = 50;
 
 //Bubble animation spritesheet
@@ -868,14 +869,33 @@ function handleGameOver () {
     //Restart ------------------------------------------------------------------------------------------------------------
     restartBtn.addEventListener('click', function () {
         gameOverAlert.remove();
+        //Reset power-ups
+        speedPU.reset();
+        if (speedPU.speedPUOn) {
+            player.speed = 40;
+            speedPU.speedPUOn = false;
+            speedIcon.remove();
+        }
+        boostPU.reset();
+        if (boostPU.boostPUOn) {
+            bubbleFrequence = 50;
+            boostPU.boostPUOn = false;
+            boostIcon.remove();
+        }
+        magnetPU.reset();
+        if (magnetPU.magnetPUOn) {
+            magnetPU.magnetPUOn = false;
+            magnetIcon.remove();
+        }
+        //Reser initial values
         score = 0;
         lifes = 3;
         gameFrame = 0;
         gameSpeed = 1;
+        bubblesArray = [];
+        uptadeLifes();
         gameOver = false;
         play = true;
-        magnetPUOn = false;
-        uptadeLifes();
         animate();
     });
 }
