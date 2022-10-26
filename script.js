@@ -820,19 +820,64 @@ function handlePowerUps() {
 
 function handleGameOver () {
     gameOver = true;
-    //Frame
-    const gameOverFrame = document.createElement('div');
-    gameOverFrame.classList.add('gameOverFrame');
-    body.appendChild(gameOverFrame);
-        //Content
-        const gameOverContent = document.createElement('div');
-        gameOverContent.classList.add('gameOverContent');
-        gameOverFrame.appendChild(gameOverContent);
-            //Title
-            const gameOverTitle = document.createElement('h2');
-            gameOverTitle.innerText = 'Game Over';
-            gameOverTitle.classList.add('gameOverTitle');
-            gameOverContent.appendChild(gameOverTitle);
+    //Game Over Alert
+    const gameOverAlert = document.createElement('div');
+    gameOverAlert.classList.add('gameOverAlert');
+    canvasContainer.appendChild(gameOverAlert);
+        //Fog effect
+        const fogEffect = document.createElement('div');
+        fogEffect.classList.add('fogEffect');
+        gameOverAlert.appendChild(fogEffect);
+            //Frame
+            const gameOverFrame = document.createElement('div');
+            gameOverFrame.classList.add('gameOverFrame');
+            fogEffect.appendChild(gameOverFrame);
+                //Content
+                const gameOverContent = document.createElement('div');
+                gameOverContent.classList.add('gameOverContent');
+                gameOverFrame.appendChild(gameOverContent);
+                    //Content Dashed Border
+                    const gameOverContentBorder = document.createElement('div');
+                    gameOverContentBorder.classList.add('gameOverContentBorder');
+                    gameOverContent.appendChild(gameOverContentBorder);
+                        //Title
+                        const gameOverTitle = document.createElement('h2');
+                        gameOverTitle.innerText = 'Game Over';
+                        gameOverTitle.classList.add('gameOverTitle');
+                        gameOverContentBorder.appendChild(gameOverTitle);
+                        //Score Title
+                        const gameOverScoreTitle = document.createElement('p');
+                        gameOverScoreTitle.innerText = 'Score:';
+                        gameOverScoreTitle.classList.add('gameOverScoreTitle');
+                        gameOverContentBorder.appendChild(gameOverScoreTitle);
+                        //Score Value
+                        const gameOverScoreValue = document.createElement('p');
+                        gameOverScoreValue.innerText = score;
+                        gameOverScoreValue.classList.add('gameOverScoreValue');
+                        gameOverContentBorder.appendChild(gameOverScoreValue);
+                        //Button
+                        const restartBtnFrame = document.createElement('div');
+                        restartBtnFrame.classList.add('restartBtnFrame');
+                        gameOverContentBorder.appendChild(restartBtnFrame);
+                            //Button
+                            const restartBtn = document.createElement('h2');
+                            restartBtn.innerText = 'Try again';
+                            restartBtn.classList.add('restartBtn');
+                            restartBtnFrame.appendChild(restartBtn);
+
+    //Restart ------------------------------------------------------------------------------------------------------------
+    restartBtn.addEventListener('click', function () {
+        gameOverAlert.remove();
+        score = 0;
+        lifes = 3;
+        gameFrame = 0;
+        gameSpeed = 1;
+        gameOver = false;
+        play = true;
+        magnetPUOn = false;
+        uptadeLifes();
+        animate();
+    });
 }
 
 // Animation loop ----------------------------------------------------------------------------------------------------
