@@ -1,0 +1,297 @@
+/*------------------------------------------------------------------------------
+Variable declaration
+The color name was generated with:
+* https://chir.ag/projects/name-that-color
+* https://colornamer.robertcooper.me/
+------------------------------------------------------------------------------*/
+:root {
+  --azure-radiance: #0085ef;
+  --blazing-bonfire: #FFA032;
+  --blue-royale: #2d287c;
+  --bunting: #191550;
+  --cedar-wood-finish: #6b1a01;
+  --cerulean: #00A1CF;
+  --deadly-depths: #161344;
+  --desert: #a74e22;
+  --dodger-blue: #00B2FF;
+  --ferocious-fox: #DB5A1B;
+  --golden-pumpkin: #cc854a;
+  --haiti: #16143b;
+  --international-klein-blue: #002cbe;
+  --jacko-bean: #301805;
+  --lochmara: #0078D3;
+  --lusty-orange: #e2682a;
+  --meteorite: #2E226D;
+  --parisian-night: #303242;
+  --purple-cabbage: #342aaa;
+  --royal-flycatcher-crest: #f36507;
+  --royal-vessel: #4033ee;
+  --ryza-dust: #eb6619;
+  --scampi: #5f5aa8;
+  --serenade: #fff6ea;
+  --shadowdancer: #100f58;
+  --south-shore-sun: #FFDA9F;
+  --tolopea: #120455;
+  --underwater-falling: #0627b8;
+
+  --font-family: 'Fredoka One';
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  cursor: url(./../images/vor_blandfish.cur), auto;
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--cerulean);
+  background-image: url('./../images/background_level1.jpg');
+  background-blend-mode: multiply;
+  /*background-blend-mode: soft-light;*/
+  /*background-blend-mode: overlay;*/
+  background-position: top;
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-family: var(--font-family), cursive;
+  font-size: 50px;
+}
+
+.gameContainer {
+  width: 1820px;
+  height: 1000px;
+  margin: auto;
+  margin-top: 20vh;
+  background: linear-gradient(142deg, var(--dodger-blue) 35%, var(--azure-radiance) 100%);
+  border: 4px solid var(--lochmara);
+  border-radius: 130px;
+  box-shadow: 0 0 43px 11px var(--meteorite);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Game Init -----------------------------------------------------------------------------------------------*/
+
+.gameInit {
+  background: linear-gradient(142deg, var(--bunting) 35%, var(--deadly-depths) 100%);
+  width: inherit;
+  height: inherit;
+  padding: 2vh;
+  border-radius: inherit;
+  border: 4px solid var(--haiti);
+  box-shadow: inset 0 0 20px var(--blue-royale);
+}
+
+.gameInitContent {
+  padding: 4vh 0 3vh 0;
+  border-radius: inherit;
+  border: 3px solid var(--purple-cabbage);
+  box-shadow: inset 0 0 20px var(--royal-vessel);
+  height: 900px;
+  background-image: url('./../images/game_cover.jpg');
+  background-position: bottom;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.gameInitBtnContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2vh;
+}
+
+.gameInitBtn {
+  background: url('./../images/banner_2.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  text-align: center;
+  font-family: var(--font-family), cursive;
+  font-size: 60px;
+  color: var(--parisian-night);
+  border: none;
+  padding: 2vh 5vw;
+}
+
+/* Canvas Set Up -----------------------------------------------------------------------------------------------*/
+
+.canvasContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 0;
+}
+
+.gameCanvas {
+  width: 1750px;
+  height: 900px;
+  border: 4px solid var(--lochmara);
+  border-radius: 100px;
+  background: linear-gradient(180deg, var(--international-klein-blue) 32%, (--underwater-falling) 61%, var(--tolopea) 98%);
+}
+
+/* Top Controller */
+
+.topControllerContainer {
+  position: absolute;
+  top: 30px;
+  right: 2vw;
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+
+.gameInitBtn,
+.btnContainer {
+  cursor: pointer;
+}
+
+.btnContainer {
+  z-index: 999;
+  margin-right: 30px;
+}
+
+.controllerBtn {
+  height: 70px;
+}
+
+/* Bottom Controller */
+
+.bottomControllerContainer {
+  position: absolute;
+  bottom: 0;
+  left: 4vw;
+  display: flex;
+  align-items: flex-end;
+}
+
+.scoreContainerBackground {
+  background-image: url('./../images/score_counter.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 220px;
+  height: 120px;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 20px;
+  padding-top: 35px;
+}
+
+.scoreContainer {
+  width: 90px;
+}
+
+.scoreValue {
+  font-size: 36px;
+  color: var(--parisian-night);
+  text-align: center;
+}
+
+.lifesBar {
+  height: 100px;
+  margin-left: 1vw;
+}
+
+.powerUp {
+  height: 90px;
+  margin-left: 1vw;
+}
+
+/* Game Over  -----------------------------------------------------------------------------------------------*/
+.gameOverAlert {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.fogEffect {
+  background-color: rgba(38, 42, 78, 0.774);
+  width: 100%;
+  height: 100%;
+  border-radius: 110px;
+}
+
+.gameOverFrame {
+  background: linear-gradient(142deg, var(--blazing-bonfire) 35%, var(--ferocious-fox) 100%);
+  width: 40%;
+  padding: 1.5vh;
+  border-radius: 160px;
+  border: 3px solid var(--lusty-orange);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 43px 11px var(--shadowdancer);
+  box-shadow: inset 0 0 20px var(--cedar-wood-finis);
+}
+
+.gameOverContent {
+  padding: 1.5vh;
+  border-radius: 150px;
+  background-color: var(--south-shore-sun);
+  border: 3px solid var(--lusty-orange);
+  box-shadow: 0 0 43px 11px var(--royal-flycatcher-crest);
+}
+
+.gameOverContentBorder {
+  border: 4px dashed var(--golden-pumpkin);
+  border-radius: 110px;
+  padding: 1.5vh;
+}
+
+.gameOverTitle {
+  text-align: center;
+  margin-bottom: 3vh;
+  color: var(--ryza-dust);
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: var(--scampi);
+  font-size: 2.5vw;
+  line-height: 85%;
+  text-transform: uppercase;
+}
+
+.gameOverScoreTitle {
+  text-align: center;
+  color: var(--desert);
+  text-transform: uppercase;
+  font-size: 1vw;
+}
+
+.gameOverScoreValue {
+  text-align: center;
+  color: var(--serenade);
+  -webkit-text-stroke-width: 5px;
+  -webkit-text-stroke-color: var(--desert);
+  text-transform: uppercase;
+  font-size: 2vw;
+}
+
+.restartBtnFrame {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2vh;
+}
+
+.restartBtn {
+  background: url('./../images/banner_3.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  text-align: center;
+  font-family: var(--font-family), cursive;
+  font-size: 50px;
+  color: var(--serenade);
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: var(--jacko-bean);
+  border: none;
+  padding: 2vh 2vw;
+}
