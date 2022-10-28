@@ -1,11 +1,12 @@
 
+const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
 
 //Selectors -------------------------------------------------------------------------------------------------------
 const body = document.getElementById('body');
 const gameContainer = document.getElementById('gameContainer');
 const gameInit = document.getElementById('gameInit');
 const gameInitBtn = document.getElementById('gameInitBtnContainer');
-
 
 //Initializing game ------------------------------------------------------------------------------------------------
 let score = 0;
@@ -117,13 +118,15 @@ function canvasSetUp () {
                 bottomController.appendChild(powerUpsContainer);
     
     ctx = canvas.getContext('2d');
-    canvas.height = 900;
-    canvas.width = 1750;
+    canvas.height = gameContainer.offsetHeight;
+    canvas.width = gameContainer.offsetWidth;
 
     // Mouse interactivity
     canvasPosition = canvas.getBoundingClientRect();
     onresize = (event) => {
         canvasPosition = canvas.getBoundingClientRect();
+        canvas.height = gameContainer.offsetHeight;
+        canvas.width = gameContainer.offsetWidth;
     };
 
     mouse = {

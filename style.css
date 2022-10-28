@@ -17,13 +17,14 @@ body {
     background-repeat: no-repeat;
     font-family: 'Fredoka One', cursive;
     font-size: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .gameContainer {
-    width: 1820px;
-    height: 1000px;
-    margin: auto;
-    margin-top: 20vh;
+    width: 100%;
+    height: 100%;
     background: linear-gradient(142deg, rgba(0,178,255,1) 35%, rgba(0,133,239,1) 100%);
     border: 4px solid #0078D3;
     border-radius: 130px;
@@ -39,20 +40,18 @@ body {
     background: linear-gradient(142deg, #191550 35%, #161344 100%);
     width: inherit;
     height: inherit;
-    padding: 2vh;
     border-radius: inherit;
-    border: 4px solid #16143b;
     box-shadow: inset 0 0 20px #2d287c;
 }
 
 .gameInitContent {
     padding: 4vh 0 3vh 0;
+    height: 100%;
     border-radius: inherit;
     border: 3px solid #342aaa;
     box-shadow: inset 0 0 20px #4033ee;
-    height: 900px;
     background-image: url('images/game_cover.jpg');
-    background-position: bottom;
+    background-position: top;
     background-size: cover;
     display: flex;
     justify-content: center;
@@ -73,7 +72,7 @@ body {
     background-position: center;
     text-align: center;
     font-family: 'Fredoka One', cursive;
-    font-size: 60px;
+    font-size: 35px;
     color: #303242;
     border: none;
     padding: 2vh 5vw;
@@ -87,12 +86,14 @@ body {
     justify-content: center;
     align-items: center;
     z-index: 0;
+    width: inherit;
+    height: inherit;
 }
 
 .gameCanvas {
-    width: 1750px;
-    height: 900px;
     border: 4px solid #0078D3;
+    width: inherit;
+    height: inherit;
     border-radius: 100px;
     background: linear-gradient(180deg, rgb(0, 44, 190) 32%, rgb(6, 39, 184) 61%, rgba(18,4,85,1) 98%);
 }
@@ -255,3 +256,17 @@ body {
     padding: 2vh 2vw;
 }
 
+    /* Small Computer*/
+    @media (min-width:1250px) { 
+        .gameContainer {
+            width: 1072px;
+            height: 603px;
+        }
+    }
+    /* Regular Computer*/
+    @media (min-width:1400px) { 
+        .gameContainer {
+            width: 1248px;
+            height: 702px;
+        }
+    }
