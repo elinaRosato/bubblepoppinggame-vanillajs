@@ -664,7 +664,7 @@ class SpeedPU extends PowerUp {
     }
     handle() {
         //Push speed power-up every 1300 frames
-        if (!this.speedPUOn && this.speed == 0 && gameFrame > 250 && gameFrame % 130 == 0) {  
+        if (!this.speedPUOn && this.speed == 0 && gameFrame > 2500 && gameFrame % 1300 == 0) {  
             this.speed = Math.random() * 6 + 1;
         } else {
             this.draw();
@@ -723,7 +723,7 @@ class BoostPU extends PowerUp {
     }
     handle() {
         //Push boost power-up every 1300 frames
-        if (!this.boostPUOn && this.speed == 0 && gameFrame > 350 && gameFrame % 230 == 0) {  
+        if (!this.boostPUOn && this.speed == 0 && gameFrame > 3500 && gameFrame % 2300 == 0) {  
             this.speed = Math.random() * 6 + 1;
         } else {
             this.draw();
@@ -778,7 +778,7 @@ class MagnetPU extends PowerUp {
     }
     handle() {
         //Push magnet power-up every 1300 frames
-        if (!this.magnetPUOn && this.speed == 0 && gameFrame > 350 && gameFrame % 230 == 0) {  
+        if (!this.magnetPUOn && this.speed == 0 && gameFrame > 450 && gameFrame % 3900 == 0) {  
             this.speed = Math.random() * 6 + 1;
         } else {
             this.draw();
