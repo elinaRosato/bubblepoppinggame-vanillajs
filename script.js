@@ -243,7 +243,7 @@ class Player {
     constructor(){
         this.x = canvas.width/2;
         this.y = canvas.height/2;
-        this.radius = 50;
+        this.radius = 35;
         this.angle = 0;
         this.speed = 40;
         this.frameX = 0;
@@ -330,9 +330,9 @@ class Player {
 
         // Animate the character
         if (this.x >= mouse.x) {
-            ctx.drawImage(playerLeft, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, 0 - 60, 0 - 45, this.spriteWidth/4, this.spriteHeight/4);
+            ctx.drawImage(playerLeft, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, 0 - 50, 0 - 35, this.spriteWidth/5, this.spriteHeight/5);
         } else {
-            ctx.drawImage(playerRight, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, 0 - 60, 0 - 45, this.spriteWidth/4, this.spriteHeight/4);
+            ctx.drawImage(playerRight, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, 0 - 50, 0 - 35, this.spriteWidth/5, this.spriteHeight/5);
         }
 
         ctx.restore();
@@ -361,7 +361,7 @@ class Bubble {
     constructor() {
         this.x = Math.random() * canvas.width;
         this.y = canvas.height + 100;
-        this.radius = 50;
+        this.radius = 30;
         this.speed = Math.random() * 5 + 1;
         this.distance;
         this.frameX = 0;
@@ -392,7 +392,7 @@ class Bubble {
         }
     }
     draw() {
-        ctx.drawImage(bubbleImage, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x - 54, this.y - 83, this.spriteWidth/3.7, this.spriteHeight/3.7);
+        ctx.drawImage(bubbleImage, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x - 35, this.y - 53, this.spriteWidth/5.7, this.spriteHeight/5.7);
     }
 }
 
@@ -462,7 +462,7 @@ enemyCollisionSound.src = 'sounds/ouch0.mp3';
 class Enemy {
     constructor() {
         this.movesTo = Math.random() < 0.5 ? 'right' : 'left';
-        this.radius = 55;
+        this.radius = 40;
         this.x = this.movesTo == 'right' ? 0 - this.radius*2 : canvas.width + this.radius*2;
         this.y = Math.random() * canvas.height;
         this.speed = Math.random() * 3 + 1;
@@ -527,7 +527,7 @@ class Enemy {
         }
     }
     draw() {
-        ctx.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.movesTo == 'right' ? this.x - 70 : this.x -60, this.y - 60, this.spriteWidth/3.3, this.spriteHeight/3.3);
+        ctx.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.movesTo == 'right' ? this.x - 50 : this.x - 50, this.y - 50, this.spriteWidth/4.3, this.spriteHeight/4.3);
     }
 }
 
@@ -583,7 +583,7 @@ class PowerUp {
     constructor(img) {
         this.x = Math.random() * canvas.width;
         this.y = canvas.height + 100;
-        this.radius = 50;
+        this.radius = 30;
         this.speed = 0;
         this.distance;
         this.img = img;
@@ -598,7 +598,8 @@ class PowerUp {
         this.distance = Math.sqrt(dx*dx + dy*dy);
     }
     draw() {
-        ctx.drawImage(this.img, this.x-50, this.y-50, this.radius*2, this.radius*2);
+        // Draw a circle representing the character
+        ctx.drawImage(this.img, this.x-30, this.y-30, this.radius*2, this.radius*2);
     }
     reset() {
         // Bring extra life back down once it goes out of the canvas top

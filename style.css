@@ -115,7 +115,7 @@ body {
 }
 
 .controllerBtn {
-    height: 70px;
+    height: 50px;
 }
 
 /* Bottom Controller */
@@ -132,32 +132,32 @@ body {
     background-image: url('images/score_counter.png');
     background-size: contain;
     background-repeat: no-repeat;
-    width: 220px;
-    height: 120px;
+    width: 200px;
+    height: 100px;
     display: flex;
     justify-content: flex-end;
-    padding-right: 20px;
+    padding-right: 30px;
     padding-top: 27px;
 }
 
 .scoreContainer {
-    width: 90px;
+    width: 80px;
 }
 
 .scoreValue {
-    font-size: 50px;
+    font-size: 30px;
     color: #303242;
     text-align: center;
 }
 
 .lifesBar {
-    height: 100px;
+    height: 80px;
     margin-left: 1vw;
 }
 
 .powerUp {
-    height: 90px;
-    margin-left: 1vw;
+    height: 70px;
+    margin-left: 1.5vw;
 }
 
 
@@ -179,7 +179,7 @@ body {
     background: linear-gradient(142deg, #FFA032 35%, #DB5A1B 100%);
     width: 40%;
     padding: 1.5vh;
-    border-radius: 160px;
+    border-radius: 120px;
     border: 3px solid #e2682a;
     position: absolute;
     top: 50%;
@@ -192,7 +192,7 @@ body {
 
 .gameOverContent {
     padding: 1.5vh;
-    border-radius: 150px;
+    border-radius: 120px;
     background-color: #FFDA9F;
     border: 3px solid #e2682a;
     box-shadow: 0px 0px 43px 11px rgb(243, 101, 7);
@@ -201,16 +201,16 @@ body {
 .gameOverContentBorder {
     border: 4px dashed #cc854a;
     border-radius: 110px;
-    padding: 1.5vh;
+    padding: 6vh 1.5vh;
 }
 
 .gameOverTitle {
     text-align: center;
     margin-bottom: 3vh;
     color: #eb6619;
-    -webkit-text-stroke-width: 2px;
-    -webkit-text-stroke-color: #5f5aa8;
-    font-size: 2.5vw;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: #3d3b5c;
+    font-size: 3.2vw;
     line-height: 85%;
     text-transform: uppercase;
 
@@ -220,17 +220,17 @@ body {
     text-align: center;
     color: #a74e22;
     text-transform: uppercase;
-    font-size: 1vw;
+    font-size: 1.5vw;
 
 }
 
 .gameOverScoreValue {
     text-align: center;
     color: #fff6ea;
-    -webkit-text-stroke-width: 5px;
-    -webkit-text-stroke-color: #a74e22;
+    -webkit-text-stroke-width: 4px;
+    -webkit-text-stroke-color: #6d391f;
     text-transform: uppercase;
-    font-size: 2vw;
+    font-size: 5vw;
 }
 
 
@@ -248,10 +248,10 @@ body {
     background-position: center;
     text-align: center;
     font-family: 'Fredoka One', cursive;
-    font-size: 50px;
+    font-size: 30px;
     color: #fff6ea;
     -webkit-text-stroke-width: 1px;
-    -webkit-text-stroke-color: #301805;
+    -webkit-text-stroke-color: #493626;
     border: none;
     padding: 2vh 2vw;
 }
